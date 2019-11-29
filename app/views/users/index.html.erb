@@ -1,0 +1,38 @@
+<div class = 'container'>  
+  <%= form_with(scope: :search, url: users_path, method: :get, local: true) do |f| %>
+    <div>
+      <%= f.label(:name, '名前') %>
+      <%= f.text_field :name %>
+    </div>
+    <div>
+      <%= f.collection_radio_buttons(:gender, User.genders, :first, :first) do |r| %>
+        <!-- r.valueと@search_params[:gender]が一致した場合はcheckedにtrueを設定する-->
+        <%= r.radio_button(checked: r.value == @search_params[:gender]) + r.text %>
+      <% end %>
+    </div>
+    <div>
+      <%= f.label(:birth_day, '誕生日') %>
+      <%= f.date_field :birthday_from, value: @search_params[:birthday_from] %> ~ <%= f.date_field :birthday_to, value: @search_params[:birthday_to] %>
+    </div>
+    <div>
+      <%= f.label(:prefecture_id, '出身') %>
+      <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, selected: @search_params[:prefecture_id], include_blank: '選択') %>
+    </div>
+    <%= f.submit('検索') %>
+  <% end %>
+  <ul>
+    <% @users.each do |user| %>
+      <li>
+        <p><%= user.name %> / <%= user.gender %> / <%= user.birthday %> / <%= user.prefecture.name %> /
+        <% if user.tags.present? %>
+          <% user.tags.each do |tag| %>
+            <%= tag.body %>
+          <% end %>
+        <% else %>
+          No Tag..
+        <% end %>  
+        </p>
+      </li>
+    <% end %>
+  </ul>
+</div>

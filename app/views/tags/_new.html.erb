@@ -1,0 +1,9 @@
+<div class = 'container'> 
+  <%= form_with(model: tag, local: true)do |r| %>
+    <div>
+      <%= r.label :body,"タグ選択" %>
+      <%= r.text_field :body %>
+    </div>
+    <%= r.submit 'タブ作成' %>
+  <% end %>
+</div> 
