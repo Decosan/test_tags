@@ -9,3 +9,6 @@ User.find_or_create_by(name:'Yoko',gender: 2, birthday: '10/6/1985',prefecture_i
 User.find_or_create_by(name:'Ken',gender: 1, birthday: '12/1/2009',prefecture_id: 4)
 User.find_or_create_by(name:'Nobu',gender: 1, birthday: '4/12/1969',prefecture_id: 1)
 User.find_or_create_by(name:'kana',gender: 2, birthday: '6/2/1999',prefecture_id: 5)
+Tag.find_or_create_by(body: "Ruby開発")
+Tag.find_or_create_by(body: "Payson開発")
+Tag.find_or_create_by(body: "C++開発")

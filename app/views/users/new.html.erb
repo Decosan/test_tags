@@ -1,42 +1,38 @@
-<div class = 'container'>  
-  <%= form_with(model:@user, local: true)do |f| %>
+<div class = 'container'>
+  <%= form_with(model: @user, local: true)do |f| %>
     <div>
-      <%= f.label :name, '名前' %>
+      <%= f.label :name, "名前" %>
       <%= f.text_field :name %>
     </div>
 
-    <div class='form'>
-      <%= f.label :gender,'性別' %>
+    <div>
+      <%= f.label :gender, "性別" %>
       <%= f.select :gender, User.genders.keys, {}, class: "select-default" %>
     </div>
 
-    <div class="form">
-      <%= f.label :birthday, '誕生日' %>
+    <div>
+      <%= f.label :birthday, "誕生日" %>
       <%= f.date_select(
-          :birthday,
-          start_year: 1930,
-          end_year: (Time.now.year - 18),
-          default: Date.new(1989, 1, 1)) %>
+        :birthday,
+        start_year: 1930,
+        end_year: (Time.now.year - 18),
+        default: Date.new(1989, 1, 1)) %>
     </div>
 
     <div>
-      <%= f.label :prefecture_id, "コース選択" %>
+      <%= f.label :prefecture_id, "出身地" %>
       <%= select_tag 'user[prefecture_id]', options_from_collection_for_select(@prefectures, :id, :name) %>
     </div>
 
     <div>
-      <div>
-        <%= render 'tags/new', tag: @tag %>
-      </div>
-      <div>
-        <% if Tag.any? %>
-          <%= render 'tags/index', tags: @tags %>
-        <% else %>
-          No Tag..
-        <% end %>  
-      </div>
+      <%= f.label :tag_ids, "タグ選択" %>
+      <% Tag.all.each do |tag| %>
+        <%= f.check_box :tag_ids, { multiple: true, checked: tag[:checked], disabled: tag[:disabled], include_hidden: false }, tag[:id] %>
+        <label><%= tag.body %></label>
+      <% end %>
     </div>
-    
-    <%= f.submit '送信' %>
+
+    <%= f.submit "作成" %>
+
   <% end %>
-</div>
+</div>  
